@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+name: node-app-deployment
+labels:
+app: node-app
+spec:
+replicas: 1 # número de réplicas do pod
+selector:
+matchLabels:
+app: node-app
+template:
+metadata:
+labels:
+app: node-app
+spec:
+containers:
+- name: node-app
+# image: se estiver usando um registry público, coloque aqui. Ex: myrepo/node-prom-app:latest
+image: node-prometheus-app:latest
+imagePullPolicy: IfNotPresent
+ports:
+- containerPort: 3000
+# Liveness/readiness podem ser adicionadas aqui se desejar

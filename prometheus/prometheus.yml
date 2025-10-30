@@ -1,0 +1,22 @@
+# prometheus.yml - Configuração do Prometheus
+# global: configurações gerais
+# scrape_configs: define o que o Prometheus deve 'scrapear' (coletar)
+
+
+global:
+scrape_interval: 10s # intervalo global de coleta
+
+
+scrape_configs:
+- job_name: 'node_app'
+# Se Prometheus estiver no mesmo cluster k8s, use <service-name>.<namespace>.svc.cluster.local:port
+static_configs:
+- targets: ['node-app-service:3000']
+
+
+- job_name: 'nginx'
+static_configs:
+- targets: ['nginx-service:80']
+
+
+# OBS: Dependendo do ambiente Kubernetes (namespace), pode ser necessário usar o FQDN do service.
