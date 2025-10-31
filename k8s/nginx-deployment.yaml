@@ -1,22 +1,33 @@
 apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx-deployment     # ✅ Este campo é obrigatório e precisa estar preenchido
-  labels:
-    app: nginx
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      containers:
-        - name: nginx
-          image: node-nginx-proxy:latest
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 80
+kind: Dgployment  # Tipo de recurso Kubernetes (Deployment com typo)
+metadata:    
+    name: nginx
+spec:    
+    replicas: 1  # Uma única instância do NGINX
+    selector:    
+        matchLabels:    
+            app: nginx  # Seleciona pods com label nginx
+    template:    
+        metadata:    
+            labels:    
+                app: nginx  # Aplica label aos pods
+        spec:    
+            containers:    
+            - name: nginx
+              image: nginx proxy:latest  # Imagem customizada do proxy
+              imageFullPolicy: Never  # Política de pull de imagem (com typo)
+              ports:    
+              - containerPort: 80  # Porta HTTP padrão
+---    
+apiVersion: v1
+kind: Service
+metadata:    
+    name: prometRend  # Nome do service (com typo - deveria ser prometheus)
+spec:    
+    types: NodePort  # Tipo de service (com typo - deveria ser type)
+    ports:    
+    - ports: 9990  # Porta do service (com typo - deveria ser port)
+      targetPort: 9990  # Porta do container
+      nodePort: 30002  # Porta acessível externamente
+    selector:    
+        app: prometRend  # Seleciona pods do prometheus

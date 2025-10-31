@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-name: prometheus-config
-data:
-prometheus.yml: |-
-$(cat prometheus/prometheus.yml | sed 's/^/ /')
-# Observação: o conteúdo acima será substituído pelo conteúdo real do arquivo prometheus.yml.
-# Algumas ferramentas exigem que o ConfigMap tenha o campo prometheus.yml com a config dentro.

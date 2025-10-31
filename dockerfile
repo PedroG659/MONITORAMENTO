@@ -1,24 +1,20 @@
-# Dockerfile para a aplicação Node.js
-# 1) Usa uma imagem Node leve
+# Define a imagem base para o container - Node.js versão 18 em distribuição Alpine (leve)
 FROM node:18-alpine
 
+# Define o diretório de trabalho dentro do container onde o app ficará
+WORKDIR /app
 
-# 2) Define diretório de trabalho dentro do container
-WORKDIR /usr/src/app
-
-
-# 3) Copia package.json e package-lock.json (se existir) e instala dependências
+# Copia os arquivos package.json e package-lock.json para o diretório /app
 COPY package*.json ./
-RUN npm install --production
 
+# Executa o comando npm install para instalar todas as dependências do projeto
+RUN npm install
 
-# 4) Copia o restante do código para dentro da imagem
+# Copia todo o restante do código fonte da aplicação para o diretório /app
 COPY . .
 
-
-# 5) Expõe a porta em que o app irá rodar
+# Informa que o container irá escutar na porta 3000 (documentação)
 EXPOSE 3000
 
-
-# 6) Comando de inicialização do container
-CMD ["node", "server.js"]
+# Comando que será executado quando o container iniciar - inicia a aplicação Node.js
+CMD ["npm", "start"]
